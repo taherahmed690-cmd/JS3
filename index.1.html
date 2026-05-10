@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST</title>
+    <style>
+        body {
+background-color: black;
+          color: #e0f8e9;
+       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border-top: yellow 10px dashed;
+            border-left:yellow 10px dashed;
+            border-right:yellow 10px dashed;
+            border-bottom:yellow 10px dashed;
+            padding: 20px;
+            margin: 0;
+            border-radius: 15px;
+        } body {
+    user-select: none; /* يمنع الطالب من تحديد النص ونسخه */
+    -webkit-user-select: none;
+} /* تنسيق الإجابة الصحيحة */
+.correct-answer {
+    background-color: rgba(46, 204, 113, 0.3) !important; /* أخضر خفيف */
+    border: 1px solid #2ecc71 !important;
+    border-radius: 8px;
+}
+
+/* تنسيق الإجابة الخطأ */
+.wrong-answer {
+    background-color: rgba(231, 76, 60, 0.3) !important; /* أحمر خفيف */
+    border: 1px solid #e74c3c !important;
+    border-radius: 8px;
+}
+
+        h1 { text-align: center; font-size: 30px; text-shadow: 0 0 10px #c7da20; }
+        hr { height: 5px; background-color: yellow; border: none; margin: 20px 0; }
+
+        .question-card {
+            background-color: black;
+            border: 2px solid yellow;
+            border-top: 8px solid yellow;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
+            transition: 0.5s;
+        }
+
+        .question-card:hover { box-shadow: 0px 0px 15px yellow; }
+
+        pre {
+           background-color: black;
+            padding: 15px;
+            border-left: 5px solid yellow;
+            color: #fff;
+            direction: ltr;
+            overflow-x: auto;
+            font-size: 18px;
+        }.progress-container {
+    width: 100%;
+    height: 10px;
+   background-color: yellow; /* لون الخلفية */
+    position: fixed; /* يفضل ثابت فوق وأنت بتعمل سكرول */
+    top: 0;
+    left: 0;
+    z-index: 1001;
+}
+
+#progress-bar {
+    width: 0%; /* بيبدأ من صفر */
+    height: 100%;
+    background: linear-gradient(90deg, yellow, yellow); /* لون أخضر برنس */
+    transition: width 0.4s ease; /* ده اللي بيخليه يتحرك بنعومة */
+    box-shadow: 0 0 10px yellow;
+} /* لون الإجابة الصحيحة (أخضر خفيف هادئ) */
+/* لون الإجابة الصحيحة (أخضر خفيف هادئ) */
+.correct-flash {
+    background-color: rgba(46, 204, 113, 0.2) !important; /* أخضر شفاف */
+    border: 2px solid yellow !important;
+    color: yellow !important;
+    transition: 0.3s;
+}
+
+/* لون الإجابة الخطأ (أحمر خفيف) */
+.wrong-flash {
+    background-color: rgba(231, 76, 60, 0.2) !important; /* أحمر شفاف */
+    border: 2px solid #e74c3c !important;
+    color: #e74c3c !important;
+    transition: 0.3s;
+}
+
+        .options {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .options label {
+            display: flex;
+            align-items: left;
+            padding: 12px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .options label:hover {
+            border-color :yellow;
+            background: #111;
+        }
+
+        .options input[type="radio"] {
+            margin-left: 15px;
+            accent-color: yellow;
+            transform: scale(1.2);
+        } pre {
+        font-size: 13px; /* تصغير الخط شوية */
+        padding: 12px;
+        overflow-x: auto; /* إضافة سكرول لو الكود عريض */
+        white-space: pre; 
+        word-wrap: normal;
+    } .score-btn {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.1rem;
+    } @media (max-width: 600px) {
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .question-card {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+} @media (max-width: 992px) {
+    .quiz-container {
+        max-width: 95%;
+    }
+    
+    .question-card {
+        padding: 20px;
+    }
+} .quiz-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+} /* لما الوقت يوصل لمرحلة الخطر (مثلاً لو أضفت كلاس خطر بالجافا سكريبت) */
+.timer-danger {
+    color: #ff0000 !important;
+    animation: blink 0.5s infinite;
+    text-shadow: 0 0 20px red;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+        .score-btn {
+            display: block;
+            width: 250px;
+            margin: 40px auto;
+            padding: 15px;
+            background: yellow;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }.options label {
+        padding: 15px;
+        font-size: 14px;
+    }
+
+        .score-btn:hover { background: yellow; box-shadow: 0 0 20px yellow; }
+
+        #result {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px dashed yellow;
+            display: none;
+        } .we {
+          background-color: black;
+    border-top: 10px yellow solid;
+    border-bottom: 3px yellow solid;
+    border-right: 3px yellow solid;
+    border-left: 3px yellow solid;
+    border-radius: 10px;
+    padding: 1px;
+    color: yellow;
+    font-size: 25px;
+    width: 40%;
+        } h6 {
+            text-align: center;
+            color: crimson;
+            font-family: bold;
+            font-size: 25px;
+            border-bottom: crimson 10px dashed;
+            border-top: crimson 10px dashed;
+            border-left: crimson 8px solid;
+            border-right: crimson 8px dashed;
+            border-radius: 10px;
+            padding: 10px;
+        } .wert {
+ background-color: black;
+    color: yellow;
+    font-size: 25px;
+    font-weight: bold;
+    width: fit-content;
+    padding: 10px 25px;
+    margin: 20px auto;
+    border-top: 5px yellow;
+    border-bottom: 2px yellow;
+    border-right: 2px yellow;
+    border-left: 2px yellow;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 15px #e0e40d4d;
+    
+    position: sticky; /* يفضل ظاهر وأنت بتعمل سكرول */
+    top: 20px;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid yellow;
+    box-shadow: 0 0 15px yellow;
+    font-family: 'Orbitron', sans-serif; /* لو تقدر تضيف خط ديجيتال */
+
+}
+
+#time {
+    color: yellow;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 900; /* عشان يبقى Bold جداً */
+    margin-right: 10px;
+} 
+/* الحاوية الأساسية */
+.bubbles-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* عشان تكون خلف المحتوى */
+  overflow: hidden;
+  background-color: #0a0a0a; /* خلفية غامقة عشان اللون الأخضر يزهي */
+}
+
+/* شكل الفقاعة */
+.bubble {
+  position: absolute;
+  bottom: -100px;
+  width: 40px;
+  height: 40px;
+  background: rgb(187, 187, 117); /* لون أخضر شفاف */
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: rise 10s infinite ease-in;
+}
+
+/* حركة الصعود والتمايل */
+@keyframes rise {
+  0% {
+    bottom: -100px;
+    transform: translateX(0) scale(0.5);
+  }
+  50% {
+    transform: translateX(100px) scale(1.2);
+  }
+  100% {
+    bottom: 1080px;
+    transform: translateX(-100px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* توزيع الفقاقيع وتغيير سرعتها وأحجامها */
+.bubble:nth-child(1) { left: 10%; width: 80px; height: 80px; animation-delay: 0s; }
+.bubble:nth-child(2) { left: 20%; width: 30px; height: 30px; animation-delay: 2s; animation-duration: 12s; }
+.bubble:nth-child(3) { left: 35%; width: 50px; height: 50px; animation-delay: 4s; }
+.bubble:nth-child(4) { left: 50%; width: 20px; height: 20px; animation-delay: 1s; animation-duration: 8s; }
+.bubble:nth-child(5) { left: 65%; width: 60px; height: 60px; animation-delay: 6s; }
+.bubble:nth-child(6) { left: 80%; width: 40px; height: 40px; animation-delay: 3s; animation-duration: 15s; }
+.bubble:nth-child(7) { left: 90%; width: 25px; height: 25px; animation-delay: 5s; }
+.bubble:nth-child(8) { left: 25%; width: 45px; height: 45px; animation-delay: 8s; }
+    </style>
+</head>
+<body>
+  <div class="bubbles-container">
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+</div>
+<div class="progress-container">
+    <div id="progress-bar"></div>
+</div>
+  <div class="wert">
+    الوقت المتبقي: <span id="time">28:00</span>
+</div>
+<h6>لا يسمح بأستخدام الآلة الحاسبة</h6>
+<h1>الأختبار الثالث</h1>
+    <hr>
+
+    <form id="quizForm">
+        
+        <div class="question-card">
+            <p>السؤال الأول</p>
+            <p>أي من هذه الأكواد ينتج الناتج المطلوب؟</p>
+            <pre>
+b1e3
+            </pre>
+            <div class="options">
+                <label><input type="radio" name="q1" value="wrong"> <pre>
+let x = 10;
+let list1 = ["a", "b", "c", "d", "e"];
+let list2 = [1, 2, 3, 4, 5];
+let password = "";
+if (list1.length > list2.length) {
+  password = list1[2] + list2[3] + list1[0] + list2[0];
+} else  (list1.length < list2.length) {
+    password = list2[1] + list1[3] + list2[4] + list1[1];
+} else {
+    password = list1[1] + list2[0] + list1[4] + list2[2];
+}
+console.log(password);
+                </pre></label>
+                <label><input type="radio" name="q1" value="correct"> <pre>
+let x = 10;
+let list1 = ["a", "b", "c", "d", "e"];
+let list2 = [1, 2, 3, 4, 5];
+let password = "";
+if (list1.length > list2.length) {
+  password = list1[2] + list2[3] + list1[0] + list2[0];
+} else if (list1.length < List2.length) {
+    password = list2[1] + list1[3] + list2[4] + list1[1];
+} else {
+    password = list1[1] + list2[0] + list1[4] + list2[2];
+}
+console.log(password);              
+                </pre></label>
+            </div>
+        </div>
+
+                <div class="question-card">
+            <p>السؤال الثاني</p>
+            <p>أي من هذه الأكواد ينتج الناتج المطلوب؟</p>
+            <pre>
+Eggs
+Ecxellent
+my age is 20
+            </pre>
+            <div class="options">
+                <label><input type="radio" name="q2" value="wrong"> <pre>
+let foods = ["Milk", "Bread" , "Eggs", "Butter"];
+let adjectives = ["Good", "Ecxellent", "bad", "Average"];
+let age = 20;
+console.log(foods[2]);
+console.log(adjectives[1]);
+console.log("my age is "  age);
+                </pre>  </label>
+                <label><input type="radio" name="q2" value="correct"> <pre>
+let foods = ["Milk", "Bread" , "Eggs", "Butter"];
+let adjectives = ["Good", "Ecxellent", "bad", "Average"];
+let age = 20;
+console.log(foods[2]);
+console.log(adjectives[1]);
+console.log("my age is " + age);
+                </pre></label>
+                <label><input type="radio" name="q2" value="wrong"> <pre>
+ let foods = ["Milk", "Bread" , "Eggs", "Butter"];
+let adjectives = ["Good", "Ecxellent", "bad", "Average"];
+let age = 20;
+console.log(foods[2]);
+console.log(adjectives[0]);
+console.log("my age is " + age);             
+                </pre></label>
+               <label><input type="radio" name="q2" value="wrong"> <pre>
+let foods = ["Milk", "Bread" , "Eggs", "Butter"];
+let adjectives = ["Good", "Ecxellent", "bad", "Average"];
+let age = 20;
+console.log(foods[1]);
+console.log(adjectives[1]);
+console.log("my age is " + age);
+                </pre></label>
+            </div>
+        </div>
+
+                        <div class="question-card">
+            <p>السؤال الثالث</p>
+            <p>أي من هذه الأكواد ينتج الناتج المطلوب؟</p>
+            <pre>
+the day is : sun
+Today is my birthday party
+            </pre>
+            <div class="options">
+                <label><input type="radio" name="q3" value="wrong"> <pre>
+let days = ["sun", "mon", "tue", "wed"];
+console.log("the day is : "  days[0]);
+let event = "birthday party";
+
+if (event != "birthday party") {
+    console.log("Today is  my birthday party");
+} else {
+    console.log("Today is not my birthday party");
+}
+                </pre>  </label>
+                <label><input type="radio" name="q3" value="wrong"> <pre>
+let days = ["sun", "mon", "tue", "wed"];
+console.log("the day is : " + days[1]);
+let event = "birthday party";
+
+if (event == "birthday party") {
+    console.log("Today is  my birthday party");
+} else {
+    console.log("Today is not my birthday party");
+}
+                </pre></label>
+                <label><input type="radio" name="q3" value="wrong"> <pre>           
+let days = ["sun", "mon", "tue", "wed"];
+console.log("the day is : "  days[1]);
+let event = "birthday party";
+
+if (event != "birthday party") {
+    console.log("Today is  my birthday party");
+} else {
+    console.log("Today is not my birthday party");
+}
+                </pre></label>
+                <label><input type="radio" name="q3" value="correct"> <pre>
+let days = ["sun", "mon", "tue", "wed"];
+console.log("the day is : " + days[0]);
+let event = "birthday party";
+
+if (event == "birthday party") {
+    console.log("Today is  my birthday party");
+} else {
+    console.log("Today is not my birthday party");
+}
+                </pre></label>
+            </div>
+        </div>
+
+
+                                <div class="question-card">
+            <p>السؤال الرابع</p>
+            <p>أي من الأكواد التالية ينتج هذا المخرج</p>
+            <pre>
+Muhammed travel to japan
+he learn programming
+            </pre>
+            <div class="options">
+                <label><input type="radio" name="q4" value="wrong"> <pre>
+let countrys = ["Egypt" , "japan" , "England"];
+let subjects = ["English" , "Arabic" , "History" , "programming"];
+let count  0;
+
+if (subjects.length + 12 >= 10 && countrys.length - 1) {
+  console.log("Muhammed travel to " + countrys[1]);
+  count++;
+}
+if (count == 2) {
+  console.log("he learn "  subjects[3]);
+}
+
+                </pre>  </label>
+                <label><input type="radio" name="q4" value="wrong"> <pre>
+let countrys = ["Egypt" , "japan" , "England"];
+let subjects = ["English" , "Arabic" , "History" , "programming"];
+let count = 0;
+
+if (subjects.length + 12 >= 10 && countrys.length - 1) {
+  console.log("Muhammed travel to " + countrys[0]);
+  count++;
+}
+if (count <= 2) {
+  console.log("he learn " + subjects[3]);
+} 
+                </pre></label>
+                <label><input type="radio" name="q4" value="correct"> <pre>
+let countrys = ["Egypt" , "japan" , "England"];
+let subjects = ["English" , "Arabic" , "History" , "programming"];
+let count = 0;
+
+if (subjects.length + 12 >= 10 && countrys.length - 1) {
+  console.log("Muhammed travel to " + countrys[1]);
+  count++;
+}
+if (count <= 2) {
+  console.log("he learn " + subjects[3]);
+}           
+                </pre></label>
+                <label><input type="radio" name="q4" value="wrong"> <pre>
+let countrys = ["Egypt" , "japan" , "England"];
+let subjects = ["English" , "Arabic" , "History" , "programming"];
+let count = 0;
+
+if (subjects.length + 12 >= 10 && countrys.length - 1) {
+  console.log("Muhammed travel to " + countrys[1]);
+  count++;
+}
+if (count <- 2) {
+  console.log("he learn " + subjects[3]);
+} 
+                </pre></label>
+            </div>
+        </div>
+
+                                        <div class="question-card">
+            <p>السؤال الخامس</p>
+            <p>ما هو ناتج الكود الأتي</p>
+            <pre>
+let a = 1;
+let b = 2;
+let c = 3;
+if ((a + b == c) && (c - b == a)) {
+  if ((a + c == b * 2) || (c * 2 == a + b)) {
+    a = b + c;
+    c = b;
+    b = a + c;
+  }
+}
+console.log(a - a);
+            </pre>
+            <div class="options">
+                <label><input type="radio" name="q5" value="wrong"> <pre>
+5
+                </pre>  </label>
+                <label><input type="radio" name="q5" value="correct"> <pre>
+0
+                </pre></label>
+                <label><input type="radio" name="q5" value="wrong"> <pre>
+Error           
+                </pre></label>
+                <label><input type="radio" name="q5" value="wrong"> <pre>
+7
+                </pre></label>
+            </div>
+        </div>
+
+         <div class="question-card">
+            <p>السؤال السادس</p>
+            <p>أي من الأكواد التاليه خاطئ برمجياً</p>
+            <div class="options">
+                <label><input type="radio" name="q6" value="wrong"> <pre>
+let numbers = [1 , 200 , 23];
+for (let i = 1; i < 2; i++) {
+  if (numbers[i] == 200) {
+    console.log(numbers[i]);
+  }
+}
+                </pre>  </label>
+                <label><input type="radio" name="q6" value="wrong"> <pre>
+let num = 10;
+
+if (num <= 10) {
+  console.log(num);
+} else {
+  console.log(num);
+}
+                </pre></label>
+                <label><input type="radio" name="q6" value="wrong"> <pre>
+let num = [1 , 2 , 32 , 3 , 45];
+
+if (num.length == 5) {
+  console.log(num)
+}
+                </pre></label>
+                <label><input type="radio" name="q6" value="correct"> <pre>
+let num = [1 , 2 , 32 , 3 , 45];
+
+if (let i = 1; i < 1; i++) {
+  console.log(i);
+}
+                </pre>
+                </label>
+            </div>
+        </div>
+
+                                                        <div class="question-card">
+            <p>السؤال السابع</p>
+            <p>أي من الأكواد التالية صحيح لإخراج هذا المخرج</p>
+            <pre>
+cool man
+you are study hard
+            </pre>
+            <div class="options">
+                <label><input type="radio" name="q7" value="wrong"> <pre>
+let characteristics = ["good" , "cool" , "nice"];
+for (let i = 0; i < characteristics; i++) {
+  if (characteristics[i] == "cool") {
+    console.log(characteristics[i] + " man");
+  }
+}
+                </pre>  </label>
+                <label><input type="radio" name="q7" value="wrong"> <pre>
+let characteristics = ["good" , "cool" , "nice"];
+for (let i = 0; i < characteristics.length; i++) {
+  if (characteristics[i] != "cool") {
+    console.log(characteristics[i] + "man");
+  }
+} 
+                </pre></label>
+                <label><input type="radio" name="q7" value="correct"> <pre>
+let characteristics = ["good" , "cool" , "nice"];
+for (let i = 0; i < characteristics.length; i++) {
+  if (characteristics[i] == "cool") {
+    console.log(characteristics[i] + "man");
+  }
+}       
+                </pre></label>
+                <label><input type="radio" name="q7" value="wrong"> <pre>
+let characteristics = ["good" , "cool" , "nice"];
+for (let i = 0; i < characteristics.length; i++) {
+  if (characteristics[i] != "cool") {
+    console.log(characteristics[i] + "man");
+  }
+} 
+                </pre></label>
+            </div>
+        </div>
+    
+    
+        <div class="question-card">
+            <p>السؤال الثامن</p>
+            <p>أي من الأكواد التالية صحيح برمجياً</p>
+            <div class="options">
+                <label><input type="radio" name="q8" value="wrong"> <pre>
+let list1 = [1 ,2 ,3 ,4 ,4];
+for (list1[2] == 3) {
+  console.log("a");
+} else (list[1] == 1) {
+  console.log("b");
+} 
+                </pre>  </label>
+                <label><input type="radio" name="q8" value="correct"> <pre>
+let list1 = [1 ,2 ,3 ,4 ,4];
+if (list1[2] == 3) {
+  console.log("a");
+} else if (list[1] == 1) {
+  console.log("b");
+} 
+                </pre></label>
+                <label><input type="radio" name="q8" value="wrong"> <pre>
+let list1  [1 ,2 ,3 ,4 ,4];
+if (list1[2] == 3) {
+  console.log("a");
+} else if (list[1] == 1) {
+  console.log("b");
+}     
+                </pre></label>
+                <label><input type="radio" name="q8" value="wrong"> <pre>
+let list1 = [1 ,2 ,3 ,4 ,4];
+if (list1[2] == 3) {
+  console.log("a");
+} else  (list[1] == 1) {
+  console.log("b");
+}
+                </pre></label>
+            </div>
+        </div>
+        <button type="button" class="score-btn" onclick="checkScore()">تسليم الأختبار</button>
+
+
+       
+
+</form>
+    <div id="result"></div>
+        <div id="result"></div>
+<script>
+
+    // 1. يجب تعريف هذا المتغير في البداية
+    let quizSubmitted = false; 
+
+    let time = 28 * 60; 
+    const timeDisplay = document.getElementById('time');
+
+    const timer = setInterval(() => {
+        let mins = Math.floor(time / 60);
+        let secs = time % 60;
+        if(timeDisplay) {
+            timeDisplay.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        if (time <= 0) {
+            clearInterval(timer);
+            checkScore(); // تسليم تلقائي عند انتهاء الوقت
+            alert("انتهى الوقت!");
+        }
+        
+        time--;
+    }, 525);
+
+function checkScore() {
+    // 1. رسالة تأكيد
+    if (!confirm("هل أنت متأكد من تسليم الاختبار؟")) return;
+    
+    if (quizSubmitted) return; 
+    quizSubmitted = true;
+    clearInterval(timer); 
+
+    let score = 0;
+    const totalQuestions = 8; 
+
+    for (let i = 1; i <= totalQuestions; i++) {
+        const options = document.getElementsByName('q' + i);
+        let answered = false;
+
+        options.forEach(option => {
+            const label = option.parentElement;
+            
+            if (option.checked) {
+                answered = true;
+                if (option.value === "correct") {
+                    score++;
+                    label.classList.add('correct-answer');
+                } else {
+                    label.classList.add('wrong-answer');
+                }
+            }
+
+            // تلوين الإجابة الصحيحة دائماً ببرواز أخضر ليعرفها الطالب
+            if (option.value === "correct") {
+                label.style.border = "2px solid #2ecc71";
+            }
+            
+            option.disabled = true; // تجميد الاختيارات
+        });
+
+        // لو السؤال لم يتم حله، نلون الكارت الخاص به بلون مميز
+        if (!answered) {
+            options[0].closest('.question-card').style.borderRight = "10px solid gray";
+        }
+    }
+
+    displayResult(score, totalQuestions);
+}    
+
+
+    function displayResult(score, total) {
+        let resultDiv = document.getElementById('result');
+        let percentage = (score / total) * 100;
+        
+        resultDiv.style.display = "block";
+        resultDiv.scrollIntoView({ behavior: 'smooth' }); 
+
+        let message = "";
+        if (percentage >= 90) {
+            message = "أداء عبقري! مستوى ممتاز ومجهود رائع";
+            message = "ناجح";
+        } else if (percentage >= 60 && percentage < 90) {
+            message = "أحسنت! مجهود رائع ";
+                message = "ناجح";
+        } else {
+            message = "محاولة جيدة، استمر في التعلم والتركيز";
+            message = "راسب";
+        }
+
+        resultDiv.innerHTML =`
+            <div style="background: #000; border: 2px solid yellow; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                <h3 style="color: yellow;">النتيجة النهائية: ${score} من ${total}</h3>
+                <p style="font-size: 20px; color: #fff;">النسبة المئوية: ${percentage.toFixed(1)}%</p>
+                <p style="color: #ccc;">${message}</p>
+                <button onclick="window.location.reload()" style="margin-top:20px; padding:10px 20px; cursor:pointer; background: yellow; border:none; font-weight:bold;">إعادة المحاولة</button>
+            </div>
+      ` ;
+
+        // إخفاء العناصر بعد التسليم
+        if(document.querySelector('.score-btn')) document.querySelector('.score-btn').style.display = "none";
+        if(document.querySelector('.wert')) document.querySelector('.wert').style.display = "none";
+    }
+</script>
+</body>
+</html>

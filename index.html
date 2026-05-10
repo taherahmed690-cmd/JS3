@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تجهيز الاختبار | مدرسة نزلة محمد سمهان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #f7df1e;
+            --bg-dark: #0a0a0b;
+            --card-bg: #16161a;
+            --text-main: #e0e0e0;
+            --accent: #3f3f46;
+            --success: #2ecc71;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+         background: linear-gradient(to right, rgb(155, 155, 89), black, rgb(155, 155, 89));
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(247, 223, 30, 0.03) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .prep-card {
+            background: var(--card-bg);
+            width: 90%;
+            max-width: 500px;
+            padding: 2.5rem;
+            border-radius: 24px;
+            border: 1px solid var(--accent);
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            background: rgba(255,255,255,0.03);
+            padding: 1rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .info-item span {
+            display: block;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .info-item strong {
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .rules {
+            text-align: right;
+            margin-bottom: 2rem;
+            padding: 15px;
+            background: rgba(247, 223, 30, 0.05);
+            border-right: 3px solid var(--primary-color);
+            border-radius: 5px;
+        }
+
+        .rules ul {
+            list-style: none;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .rules li {
+            margin-bottom: 8px;
+        }
+
+        .rules li::before {
+            content: "•";
+            color: var(--primary-color);
+            margin-left: 10px;
+        }
+
+        .start-action-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: #000;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .start-action-btn:hover {
+            background: #fff;
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(247, 223, 30, 0.2);
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 1.5rem;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover { color: var(--primary-color); }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="prep-card">
+        <h2>الأختبار الثالث</h2>
+        <h2>تعليمات الاختبار</h2>
+        
+        <div class="info-grid">
+            <div class="info-item">
+                <span>عدد الأسئلة</span>
+                <strong>8 أسئلة</strong>
+            </div>
+            <div class="info-item">
+                <span>الوقت المتاح</span>
+                <strong>28 دقيقة</strong>
+            </div>
+            <div class="info-item">
+                <span>درجة النجاح</span>
+                <strong>65% فأكثر</strong>
+            </div>
+            <div class="info-item">
+                <span>المستوى</span>
+                <strong>فوق المتوسط</strong>
+            </div>
+        </div>
+
+        <div class="rules">
+            <ul>
+                <li>تأكد من استقرار اتصال الإنترنت لديك.</li>
+                <li>بمجرد البدء، سيبدأ العداد التنازلي للوقت.</li>
+                <li>كل سؤال له خيار صحيح واحد فقط.</li>
+            </ul>
+        </div>
+
+        <a href="index.1.html" class="start-action-btn">أنا مستعد، ابدأ الآن</a>
+        
+        <a href="index.html" class="back-link">العودة للرئيسية</a>
+    </div>
+
+</body>
+</html>
